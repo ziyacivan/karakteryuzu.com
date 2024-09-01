@@ -1,5 +1,5 @@
 import { Server } from "./enums";
-import { ICharacterAppearance } from "./interfaces";
+import { ICharacterAppearance, IVice } from "./interfaces";
 
 export class Converter {
   public static async detectServer(appearanceCode: string): Promise<Server> {
@@ -53,7 +53,35 @@ class ViceConverter {
   public static async convertToBaseFormat(
     appearanceCode: string
   ): Promise<ICharacterAppearance> {
-    // Convert Vice appearance code to base format
+    const code: IVice = JSON.parse(appearanceCode);
+
+    const headOverlays = code.headOverlays.map((overlay, index) => {
+      return {
+        overlayID: index,
+        index: overlay,
+        opacity: code.headOverlaysOpacity[index],
+        firstColor: code.headOverlaysColor[index],
+        secondColor: 0,
+      };
+    });
+
+    return {
+      shapeFirstID: code.blendData[0],
+      shapeSecondID: code.blendData[1],
+      shapeThirdID: 0,
+      skinFirstID: code.blendData[2],
+      skinSecondID: code.blendData[3],
+      skinThirdID: 0,
+      shapeMix: code.blendData[4],
+      skinMix: code.blendData[5],
+      thirdMix: 0,
+      isParent: false,
+      eyeColor: code.eyeColor,
+      hair: code.hair[0],
+      hairColors: [code.hair[1], code.hair[2]],
+      headOverlays: headOverlays,
+      faceFeatures: code.faceFeatures,
+    } as ICharacterAppearance;
   }
 }
 
