@@ -15,9 +15,37 @@ import {
 } from "@nextui-org/react";
 import { Server } from "./utils/enums";
 import { serverList } from "./utils/servers";
+import { Converter } from "./utils/converters";
+import { useState } from "react";
+import { Bounce, toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [appearanceCode, setAppearanceCode] = useState<string>("");
+
+  const onClick = async () => {
+    if (!appearanceCode) {
+      toast.error("🚨 Karakter yüz kodu boş bırakılamaz!", {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+        style: { fontSize: 14 },
+      });
+    }
+
+    const detectedServer = await Converter.detectServer(appearanceCode);
+    const baseFormat = await Converter.convertToBaseFormat(
+      detectedServer,
+      appearanceCode
+    );
+  };
 
   return (
     <div className="flex justify-center items-center min-h-screen">
@@ -38,6 +66,7 @@ export default function Home() {
               isRequired
               label="Karakter Yüzü"
               placeholder="Karakter yüzüne ait kodu girin"
+              onChange={(e) => setAppearanceCode(e.target.value)}
             />
             <Select
               className="mt-4"
@@ -54,7 +83,7 @@ export default function Home() {
               className="mt-4"
               color="primary"
               variant="shadow"
-              onPress={onOpen}
+              onClick={onClick}
             >
               Çevir
             </Button>
@@ -97,6 +126,7 @@ export default function Home() {
           </Modal>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }
