@@ -1,5 +1,5 @@
-import { Server } from "./enums";
-import { ICharacterAppearance, IVice } from "./interfaces";
+import { HeadOverlay, Server } from "./enums";
+import { ICharacterAppearance, IRina, IVice } from "./interfaces";
 
 export class Converter {
   public static async detectServer(appearanceCode: string): Promise<Server> {
@@ -89,7 +89,137 @@ class RinaConverter {
   public static async convertToBaseFormat(
     appearanceCode: string
   ): Promise<ICharacterAppearance> {
-    // Convert Rina appearance code to base format
+    const code: IRina = JSON.parse(appearanceCode);
+    return {
+      shapeFirstID: code.firstHeadShape,
+      shapeSecondID: code.secondHeadShape,
+      shapeThirdID: 0,
+      skinFirstID: code.firstSkinShape,
+      skinSecondID: code.secondSkinShape,
+      skinThirdID: 0,
+      shapeMix: code.headMix,
+      skinMix: code.skinMix,
+      thirdMix: 0,
+      isParent: false,
+      eyeColor: code.eyesColor,
+      hair: code.hairModel,
+      hairColors: [code.firstHairColor, code.secondHairColor],
+      headOverlays: [
+        {
+          overlayID: HeadOverlay.BLEMISHES,
+          index: code.blemishesModel,
+          opacity: code.blemishesOpacity,
+          firstColor: 0,
+          secondColor: 0,
+        },
+        {
+          overlayID: HeadOverlay.FACIAL_HAIR,
+          index: code.beardModel,
+          opacity: code.beardOpacity,
+          firstColor: code.beardColor,
+          secondColor: 0,
+        },
+        {
+          overlayID: HeadOverlay.EYEBROWS,
+          index: code.eyebrowsModel,
+          opacity: code.eyebrowsOpacity,
+          firstColor: code.eyebrowsColor,
+          secondColor: 0,
+        },
+        {
+          overlayID: HeadOverlay.AGEING,
+          index: code.ageingModel,
+          opacity: code.ageingOpacity,
+          firstColor: 0,
+          secondColor: 0,
+        },
+        {
+          overlayID: HeadOverlay.MAKEUP,
+          index: code.makeupModel,
+          opacity: code.makeupOpacity,
+          firstColor: code.makeupColor1,
+          secondColor: code.makeupColor2,
+        },
+        {
+          overlayID: HeadOverlay.BLUSH,
+          index: code.blushModel,
+          opacity: code.blushOpacity,
+          firstColor: code.blushColor,
+          secondColor: 0,
+        },
+        {
+          overlayID: HeadOverlay.COMPLEXION,
+          index: code.complexionModel,
+          opacity: code.complexionOpacity,
+          firstColor: 0,
+          secondColor: 0,
+        },
+        {
+          overlayID: HeadOverlay.SUN_DAMAGE,
+          index: code.sundamageModel,
+          opacity: code.sundamageOpacity,
+          firstColor: 0,
+          secondColor: 0,
+        },
+        {
+          overlayID: HeadOverlay.LIPSTICK,
+          index: code.lipstickModel,
+          opacity: code.lipstickOpacity,
+          firstColor: code.lipstickColor,
+          secondColor: 0,
+        },
+        {
+          overlayID: HeadOverlay.FRECKLES,
+          index: code.frecklesModel,
+          opacity: code.frecklesOpacity,
+          firstColor: 0,
+          secondColor: 0,
+        },
+        {
+          overlayID: HeadOverlay.CHEST_HAIR,
+          index: code.chestModel,
+          opacity: code.chestOpacity,
+          firstColor: code.chestColor,
+          secondColor: 0,
+        },
+        {
+          overlayID: HeadOverlay.BODY_BLEMISHES,
+          index: 0,
+          opacity: 0,
+          firstColor: 0,
+          secondColor: 0,
+        },
+        {
+          overlayID: HeadOverlay.ADD_BODY_BLEMISHES,
+          index: 0,
+          opacity: 0,
+          firstColor: 0,
+          secondColor: 0,
+        },
+      ],
+      faceFeatures: [
+        code.noseWidth,
+        code.noseHeight,
+        code.noseLength,
+        code.noseBridge,
+        code.noseTip,
+        code.noseShift,
+        code.browHeight,
+        code.browWidth,
+        code.cheekboneHeight,
+        code.cheekboneWidth,
+        code.cheeksWidth,
+        code.eyes,
+        code.lips,
+        code.jawWidth,
+        code.jawHeight,
+        code.chinLength,
+        code.chinPosition,
+        code.chinWidth,
+        code.chinShape,
+        code.neckWidth,
+      ],
+    } as ICharacterAppearance;
   }
 }
 
