@@ -23,6 +23,7 @@ import "react-toastify/dist/ReactToastify.css";
 export default function Home() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [appearanceCode, setAppearanceCode] = useState<string>("");
+  const [outputCode, setOutputCode] = useState<string>("");
 
   const onClick = async () => {
     if (!appearanceCode) {
@@ -45,6 +46,41 @@ export default function Home() {
       detectedServer,
       appearanceCode
     );
+    setOutputCode(JSON.stringify(baseFormat, null, 2));
+    onOpen();
+
+    toast.success("🎉 Karakter yüzü başarıyla çevrildi ve kopyalandı!", {
+      position: "bottom-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Bounce,
+      style: { fontSize: 14 },
+    });
+
+    navigator.clipboard.writeText(outputCode);
+  };
+
+  const onCopyClick = () => {
+    if (outputCode) {
+      navigator.clipboard.writeText(outputCode);
+      toast.success("🎉 Karakter yüzü başarıyla kopyalandı!", {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+        style: { fontSize: 14 },
+      });
+    }
   };
 
   return (
@@ -118,7 +154,15 @@ export default function Home() {
                     Çıktı Hazır!
                   </ModalHeader>
                   <ModalBody className="text-sm">
-                    <Code className="text-sm"></Code>
+                    <Textarea disabled value={outputCode} />
+                    <Button
+                      className="mt-2"
+                      color="primary"
+                      variant="solid"
+                      onClick={onCopyClick}
+                    >
+                      Kopyala
+                    </Button>
                   </ModalBody>
                 </>
               )}
