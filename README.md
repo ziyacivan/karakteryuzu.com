@@ -1,4 +1,5 @@
 ## karakteryuzu.com
+![karakteryuzu.com](https://i.imgur.com/QiDUEPb.png)
 
 **karakteryuzu.com**, herhangi bir kâr amacı gütmeden, piyasada aktif bulunan bazı sunucular tarafından desteklenen, sunucudan sunucuya karakter yüzlerinin çevrilebilmesini sağlayan, her formattan veri kabul eden ve her formata çeviren, tamamen ücretsiz ve bağımsız bir araçtır. Herhangi bir yükleme gerektirmez, kopyala ve yapıştır hızında gerekli çevirme işlerini gerçekleştirir.
 
