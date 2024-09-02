@@ -21,3 +21,24 @@ export const enum HeadOverlay {
   BODY_BLEMISHES = 11,
   ADD_BODY_BLEMISHES = 12,
 }
+
+export const variationProperties = {
+  1: "mask",
+  3: "torso",
+  4: "legs",
+  5: "bags",
+  6: "shoes",
+  7: "accessories",
+  8: "undershirt",
+  9: "armor",
+  10: "decals",
+  11: "shirts",
+} as const;
+
+export const propProperties = {
+  0: "hats",
+  1: "glasses",
+  2: "ears",
+  6: "watches",
+  7: "bracelets",
+} as const;
