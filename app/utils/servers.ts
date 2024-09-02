@@ -20,7 +20,4 @@ export const serverList = [
   },
 ];
 
-export const disabledServerList = [
-  Server.VINEWOOD.toString(),
-  Server.MENYOO.toString(),
-];
+export const disabledServerList = [Server.VINEWOOD.toString()];
