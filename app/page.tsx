@@ -229,6 +229,18 @@ export default function Home() {
               </a>{" "}
               with ❤️
             </div>
+            <div className="mt-2">
+              <a href="https://www.buymeacoffee.com/ziyacivan" target="_blank">
+                <img
+                  src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+                  alt="Buy Me A Coffee"
+                  style={{
+                    height: "40px !important",
+                    width: "150px !important",
+                  }}
+                />
+              </a>
+            </div>
           </div>
           <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
             <ModalContent>
