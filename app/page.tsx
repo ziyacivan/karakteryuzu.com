@@ -158,6 +158,9 @@ export default function Home() {
       <div className="container mx-auto p-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div className="ml-auto">
+            <div style={{ marginLeft: 140 }}>
+              <img src="./weblogo.PNG" />
+            </div>
             <h1 className="text-2xl font-bold">
               Yeni bir sunucuya mı geçiyorsunuz?
               <br />{" "}
