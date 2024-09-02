@@ -412,15 +412,29 @@ export class MenyooConverter {
   public static async convertToBaseFormat(
     appearanceCode: string
   ): Promise<ICharacterAppearance> {
-    const code = parseCharacterXML(appearanceCode);
+    const xmlOutput = parseCharacterXML(appearanceCode);
 
-    const pedProperties = code.OutfitPedData.PedProperties;
+    const pedProperties = xmlOutput.OutfitPedData.PedProperties;
     const pedComps = pedProperties.PedComps;
-    const pedProps = pedProperties.PedProps;
     const overlays = pedProperties.HeadFeatures.Overlays;
     const facialFeatures = pedProperties.HeadFeatures.FacialFeatures;
 
-    const appearance: ICharacterAppearance = {
+    let headOverlays: any[] = [];
+    let overlayIndex = 0;
+    Object.keys(overlays).forEach((key) => {
+      // @ts-ignore
+      const overlay = overlays[key];
+      headOverlays.push({
+        overlayID: overlayIndex,
+        index: overlay.index === 255 ? 0 : overlay.index,
+        opacity: overlay.opacity === 255 ? 0 : overlay.opacity,
+        firstColor: overlay.colour,
+        secondColor: overlay.colourSecondary,
+      });
+      overlayIndex++;
+    });
+
+    const appearance = {
       shapeFirstID: pedProperties.HeadFeatures.ShapeAndSkinTone.ShapeFatherId,
       shapeSecondID: pedProperties.HeadFeatures.ShapeAndSkinTone.ShapeMotherId,
       shapeThirdID: pedProperties.HeadFeatures.ShapeAndSkinTone.ShapeOverrideId,
@@ -457,102 +471,12 @@ export class MenyooConverter {
         facialFeatures._18,
         facialFeatures._19,
       ],
-      hair: 0,
-      headOverlays: [
-        {
-          overlayID: HeadOverlay.BLEMISHES,
-          index: overlays._0.index === 255 ? 0 : overlays._0.index,
-          opacity: overlays._0.index === 255 ? 0 : overlays._0.opacity,
-          firstColor: overlays._0.colour,
-          secondColor: overlays._0.colourSecondary,
-        },
-        {
-          overlayID: HeadOverlay.FACIAL_HAIR,
-          index: overlays._1.index === 255 ? 0 : overlays._1.index,
-          opacity: overlays._1.index === 255 ? 0 : overlays._1.opacity,
-          firstColor: overlays._1.colour,
-          secondColor: overlays._1.colourSecondary,
-        },
-        {
-          overlayID: HeadOverlay.EYEBROWS,
-          index: overlays._2.index === 255 ? 0 : overlays._2.index,
-          opacity: overlays._2.index === 255 ? 0 : overlays._2.opacity,
-          firstColor: overlays._2.colour,
-          secondColor: overlays._2.colourSecondary,
-        },
-        {
-          overlayID: HeadOverlay.AGEING,
-          index: overlays._3.index === 255 ? 0 : overlays._3.index,
-          opacity: overlays._3.index === 255 ? 0 : overlays._3.opacity,
-          firstColor: overlays._3.colour,
-          secondColor: overlays._3.colourSecondary,
-        },
-        {
-          overlayID: HeadOverlay.MAKEUP,
-          index: overlays._4.index === 255 ? 0 : overlays._4.index,
-          opacity: overlays._4.index === 255 ? 0 : overlays._4.opacity,
-          firstColor: overlays._4.colour,
-          secondColor: overlays._4.colourSecondary,
-        },
-        {
-          overlayID: HeadOverlay.BLUSH,
-          index: overlays._5.index === 255 ? 0 : overlays._5.index,
-          opacity: overlays._5.index === 255 ? 0 : overlays._5.opacity,
-          firstColor: overlays._5.colour,
-          secondColor: overlays._5.colourSecondary,
-        },
-        {
-          overlayID: HeadOverlay.COMPLEXION,
-          index: overlays._6.index === 255 ? 0 : overlays._6.index,
-          opacity: overlays._6.index === 255 ? 0 : overlays._6.opacity,
-          firstColor: overlays._6.colour,
-          secondColor: overlays._6.colourSecondary,
-        },
-        {
-          overlayID: HeadOverlay.SUN_DAMAGE,
-          index: overlays._7.index === 255 ? 0 : overlays._7.index,
-          opacity: overlays._7.index === 255 ? 0 : overlays._7.opacity,
-          firstColor: overlays._7.colour,
-          secondColor: overlays._7.colourSecondary,
-        },
-        {
-          overlayID: HeadOverlay.LIPSTICK,
-          index: overlays._8.index === 255 ? 0 : overlays._8.index,
-          opacity: overlays._8.index === 255 ? 0 : overlays._8.opacity,
-          firstColor: overlays._8.colour,
-          secondColor: overlays._8.colourSecondary,
-        },
-        {
-          overlayID: HeadOverlay.FRECKLES,
-          index: overlays._9.index === 255 ? 0 : overlays._9.index,
-          opacity: overlays._9.index === 255 ? 0 : overlays._9.opacity,
-          firstColor: overlays._9.colour,
-          secondColor: overlays._9.colourSecondary,
-        },
-        {
-          overlayID: HeadOverlay.CHEST_HAIR,
-          index: overlays._10.index === 255 ? 0 : overlays._10.index,
-          opacity: overlays._10.index === 255 ? 0 : overlays._10.opacity,
-          firstColor: overlays._10.colour,
-          secondColor: overlays._10.colourSecondary,
-        },
-        {
-          overlayID: HeadOverlay.BODY_BLEMISHES,
-          index: overlays._11.index === 255 ? 0 : overlays._11.index,
-          opacity: overlays._11.index === 255 ? 0 : overlays._11.opacity,
-          firstColor: overlays._11.colour,
-          secondColor: overlays._11.colourSecondary,
-        },
-        {
-          overlayID: HeadOverlay.ADD_BODY_BLEMISHES,
-          index: overlays._12.index === 255 ? 0 : overlays._12.index,
-          opacity: overlays._12.index === 255 ? 0 : overlays._12.opacity,
-          firstColor: overlays._12.colour,
-          secondColor: overlays._12.colourSecondary,
-        },
-      ],
+      hair: Number(pedComps._2.toString().split(",")[0]),
+      // @ts-ignore
+      headOverlays: headOverlays,
       isParent: false,
     };
+
     return appearance;
   }
 
