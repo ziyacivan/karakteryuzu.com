@@ -181,7 +181,11 @@ const xmlSchema = z.object({
 });
 
 export function parseCharacterXML(xml: string) {
-  const parsed = parser.parse(xml);
-  const validated = xmlSchema.parse(parsed);
-  return validated;
+  try {
+    const parsed = parser.parse(xml);
+    const validated = xmlSchema.parse(parsed);
+    return validated;
+  } catch (error) {
+    throw error;
+  }
 }

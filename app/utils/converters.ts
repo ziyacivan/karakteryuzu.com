@@ -1,4 +1,5 @@
 import { HeadOverlay, Server } from "./enums";
+import { buildMenyooXML } from "./exporters";
 import { ICharacterAppearance, IRina, IVice } from "./interfaces";
 import { parseCharacterXML } from "./parsers";
 
@@ -555,5 +556,14 @@ export class MenyooConverter {
     return appearance;
   }
 
-  public static async convertSelf(appearanceCode: ICharacterAppearance) {}
+  public static async convertSelf(
+    appearanceCode: ICharacterAppearance
+  ): Promise<string> {
+    try {
+      const code = buildMenyooXML(appearanceCode);
+      return code;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

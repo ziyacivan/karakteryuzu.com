@@ -19,3 +19,8 @@ export const serverList = [
     isActive: false,
   },
 ];
+
+export const disabledServerList = [
+  Server.VINEWOOD.toString(),
+  Server.MENYOO.toString(),
+];

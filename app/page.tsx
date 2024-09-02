@@ -2,7 +2,6 @@
 
 import {
   Button,
-  Code,
   Divider,
   Modal,
   ModalBody,
@@ -14,7 +13,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { Server } from "./utils/enums";
-import { serverList } from "./utils/servers";
+import { disabledServerList, serverList } from "./utils/servers";
 import {
   Converter,
   MenyooConverter,
@@ -63,47 +62,77 @@ export default function Home() {
     }
 
     const detectedServer = await Converter.detectServer(appearanceCode);
-    const baseFormat = await Converter.convertToBaseFormat(
-      detectedServer,
-      appearanceCode
-    );
+    try {
+      const baseFormat = await Converter.convertToBaseFormat(
+        detectedServer,
+        appearanceCode
+      );
 
-    let convertedCode;
-    switch (selectedServer) {
-      case Server.VICE:
-        convertedCode = await ViceConverter.convertSelf(baseFormat);
-        setOutputCode(JSON.stringify(convertedCode, null, 2));
-        break;
-      case Server.RINA:
-        convertedCode = await RinaConverter.convertSelf(baseFormat);
-        setOutputCode(JSON.stringify(convertedCode, null, 2));
-        break;
-      case Server.MENYOO:
-        convertedCode = await MenyooConverter.convertSelf(baseFormat);
-        // @ts-ignore
-        setOutputCode(convertedCode);
-        break;
-      default:
-        break;
+      let convertedCode;
+      switch (selectedServer) {
+        case Server.VICE:
+          convertedCode = await ViceConverter.convertSelf(baseFormat);
+          setOutputCode(JSON.stringify(convertedCode, null, 2));
+          break;
+        case Server.RINA:
+          convertedCode = await RinaConverter.convertSelf(baseFormat);
+          setOutputCode(JSON.stringify(convertedCode, null, 2));
+          break;
+        case Server.MENYOO:
+          try {
+            convertedCode = await MenyooConverter.convertSelf(baseFormat);
+            setOutputCode(convertedCode);
+          } catch (error) {
+            toast.error("🚨 Karakter yüzü çevirilirken bir hata oluştu!", {
+              position: "bottom-left",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              transition: Bounce,
+              style: { fontSize: 14 },
+            });
+            return;
+          }
+          break;
+        default:
+          break;
+      }
+
+      onOpen();
+
+      toast.success("🎉 Karakter yüzü başarıyla çevrildi ve kopyalandı!", {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+        style: { fontSize: 14 },
+      });
+
+      navigator.clipboard.writeText(outputCode);
+    } catch (error) {
+      toast.error("🚨 Karakter yüzü çevirilirken bir hata oluştu!", {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+        style: { fontSize: 14 },
+      });
+      return;
     }
-
-    setOutputCode(JSON.stringify(baseFormat, null, 2));
-    onOpen();
-
-    toast.success("🎉 Karakter yüzü başarıyla çevrildi ve kopyalandı!", {
-      position: "bottom-left",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-      transition: Bounce,
-      style: { fontSize: 14 },
-    });
-
-    navigator.clipboard.writeText(outputCode);
   };
 
   const onCopyClick = () => {
@@ -148,7 +177,7 @@ export default function Home() {
             <Select
               className="mt-4"
               label="Hedef sunucuyu seçin"
-              disabledKeys={[Server.VINEWOOD.toString()]}
+              disabledKeys={disabledServerList}
               onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
                 setSelectedServer(Number(event.target.value) as Server)
               }
@@ -189,6 +218,17 @@ export default function Home() {
               frameBorder="0"
               sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
             ></iframe>
+            <div className="mt-4 text-sm font-thin">
+              Developed by{" "}
+              <a
+                href="https://github.com/ziyacivan"
+                className="text-blue-400"
+                target="_blank"
+              >
+                <span className="font-bold">inkedev</span>
+              </a>{" "}
+              with ❤️
+            </div>
           </div>
           <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
             <ModalContent>
