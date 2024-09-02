@@ -102,5 +102,5 @@ Basitliği ve pratikliği sebebi ile `ViceConverter` sınıfı örnek kod olarak
 
 https://github.com/ziyacivan/karakteryuzu/blob/75ffbe3c126e2166e54b528d9837419f789890e9/app/utils/converters.ts#L54
 
-#### 6. Pull-request
+#### 6. Pull-request
 Fork ettiğiniz projeden, ana repository olan "karakteryuzu" repo'suna pull-request oluşturduktan sonra, onaylanması için geliştiriciye ulaşabilirsiniz. Doküman içerisinde zor görünebilen entegrasyon, pratik ettikçe kolaylaşacaktır. Herhangi bir teknik sorun yaşanması durumunda, Discord sunucusu üzerinden ulaşabilirsiniz.
