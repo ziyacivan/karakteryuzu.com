@@ -1,5 +1,6 @@
 import { XMLBuilder } from "fast-xml-parser";
 import { ICharacterAppearance } from "./interfaces";
+import { propProperties, variationProperties } from "./enums";
 
 const builder = new XMLBuilder({
   ignoreAttributes: false,
@@ -69,6 +70,29 @@ export function buildMenyooXML(appearance: ICharacterAppearance) {
       Overlays: overlays,
     },
   };
+
+  const components = {
+    _0: "0,0",
+    _2: `0,0`,
+  };
+  for (const [key, value] of Object.entries(variationProperties)) {
+    // @ts-ignore
+    components[`_${key}`] = "0,0";
+  }
+  xml.OutfitPedData.PedProperties.PedComps = components;
+
+  const props = {
+    _3: "-1,-1",
+    _4: "-1,-1",
+    _5: "-1,-1",
+    _8: "-1,-1",
+    _9: "-1,-1",
+  };
+  for (const [key, value] of Object.entries(propProperties)) {
+    // @ts-ignore
+    props[`_${key}`] = `0,0`;
+  }
+  xml.OutfitPedData.PedProperties.PedProps = props;
 
   const xmlString = builder.build(xml);
   return xmlString;
