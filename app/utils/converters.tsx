@@ -255,7 +255,156 @@ export class RinaConverter {
 
   public static async convertSelf(
     appearanceCode: ICharacterAppearance
-  ): Promise<IRina> {}
+  ): Promise<IRina> {
+    return {
+      firstHeadShape: appearanceCode.shapeFirstID,
+      secondHeadShape: appearanceCode.shapeSecondID,
+      firstSkinShape: appearanceCode.skinFirstID,
+      secondSkinShape: appearanceCode.skinSecondID,
+      headMix: appearanceCode.shapeMix,
+      skinMix: appearanceCode.skinMix,
+      hairModel: appearanceCode.hair,
+      firstHairColor: appearanceCode.hairColors[0],
+      secondHairColor: appearanceCode.hairColors[1],
+      beardModel:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.FACIAL_HAIR
+        )?.index || 0,
+      beardColor:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.FACIAL_HAIR
+        )?.firstColor || 0,
+      beardOpacity:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.FACIAL_HAIR
+        )?.opacity || 0,
+      chestModel:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.CHEST_HAIR
+        )?.index || 0,
+      chestColor:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.CHEST_HAIR
+        )?.firstColor || 0,
+      chestOpacity:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.CHEST_HAIR
+        )?.opacity || 0,
+      blemishesModel:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.BLEMISHES
+        )?.index || 0,
+      blemishesOpacity:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.BLEMISHES
+        )?.opacity || 0,
+      ageingModel:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.AGEING
+        )?.index || 0,
+      ageingOpacity:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.AGEING
+        )?.opacity || 0,
+      complexionModel:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.COMPLEXION
+        )?.index || 0,
+      complexionOpacity:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.COMPLEXION
+        )?.opacity || 0,
+      sundamageModel:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.SUN_DAMAGE
+        )?.index || 0,
+      sundamageOpacity:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.SUN_DAMAGE
+        )?.opacity || 0,
+      frecklesModel:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.FRECKLES
+        )?.index || 0,
+      frecklesOpacity:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.FRECKLES
+        )?.opacity || 0,
+      eyesColor: appearanceCode.eyeColor,
+      eyebrowsModel:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.EYEBROWS
+        )?.index || 0,
+      eyebrowsOpacity:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.EYEBROWS
+        )?.opacity || 0,
+      eyebrowsColor:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.EYEBROWS
+        )?.firstColor || 0,
+      makeupModel:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.MAKEUP
+        )?.index || 0,
+      makeupOpacity:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.MAKEUP
+        )?.opacity || 0,
+      makeupColor1:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.MAKEUP
+        )?.firstColor || 0,
+      makeupColor2:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.MAKEUP
+        )?.secondColor || 0,
+      blushModel:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.BLUSH
+        )?.index || 0,
+      blushOpacity:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.BLUSH
+        )?.opacity || 0,
+      blushColor:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.BLUSH
+        )?.firstColor || 0,
+      lipstickModel:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.LIPSTICK
+        )?.index || 0,
+      lipstickOpacity:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.LIPSTICK
+        )?.opacity || 0,
+      lipstickColor:
+        appearanceCode.headOverlays.find(
+          (overlay) => overlay.overlayID === HeadOverlay.LIPSTICK
+        )?.firstColor || 0,
+      noseWidth: appearanceCode.faceFeatures[0],
+      noseHeight: appearanceCode.faceFeatures[1],
+      noseLength: appearanceCode.faceFeatures[2],
+      noseBridge: appearanceCode.faceFeatures[3],
+      noseTip: appearanceCode.faceFeatures[4],
+      noseShift: appearanceCode.faceFeatures[5],
+      browHeight: appearanceCode.faceFeatures[6],
+      browWidth: appearanceCode.faceFeatures[7],
+      cheekboneHeight: appearanceCode.faceFeatures[8],
+      cheekboneWidth: appearanceCode.faceFeatures[9],
+      cheeksWidth: appearanceCode.faceFeatures[10],
+      eyes: appearanceCode.faceFeatures[11],
+      lips: appearanceCode.faceFeatures[12],
+      jawWidth: appearanceCode.faceFeatures[13],
+      jawHeight: appearanceCode.faceFeatures[14],
+      chinLength: appearanceCode.faceFeatures[15],
+      chinPosition: appearanceCode.faceFeatures[16],
+      chinWidth: appearanceCode.faceFeatures[17],
+      chinShape: appearanceCode.faceFeatures[18],
+      neckWidth: appearanceCode.faceFeatures[19],
+    } as IRina;
+  }
 }
 
 export class MenyooConverter {
