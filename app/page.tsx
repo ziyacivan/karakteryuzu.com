@@ -229,8 +229,8 @@ export default function Home() {
               </a>{" "}
               with ❤️
             </div>
-            <div className="mt-2">
-              <a href="https://www.buymeacoffee.com/ziyacivan" target="_blank">
+            <div className="mt-2" style={{ display: "inline-block", position: "relative", overflow: "hidden" }}>
+            <a href="https://www.buymeacoffee.com/ziyacivan" target="_blank">
                 <img
                   src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
                   alt="Buy Me A Coffee"
