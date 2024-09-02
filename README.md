@@ -2,6 +2,11 @@
 
 **karakteryuzu.com**, herhangi bir kâr amacı gütmeden, piyasada aktif bulunan bazı sunucular tarafından desteklenen, sunucudan sunucuya karakter yüzlerinin çevrilebilmesini sağlayan, her formattan veri kabul eden ve her formata çeviren, tamamen ücretsiz ve bağımsız bir araçtır. Herhangi bir yükleme gerektirmez, kopyala ve yapıştır hızında gerekli çevirme işlerini gerçekleştirir.
 
+Credits:
+
+- [Play:V Freeroam (Menyoo Import/Export)](https://github.com/MyHwu9508/PlayVFreeroam)
+- [Manifesto & Flaviano (Karakter Yüzü Kodu)](https://vice-online.com/anasayfa/)
+
 ### Nasıl kullanılır?
 
 Kullanımı çok basit, internet sitesine gittikten sonra desteklenen sunuculardan herhangi birisinin (buna Menyoo dahil) karakter yüz kodunu yapıştırın ve hedef çıktıyı seçin, bağlantı hızına bağlı olarak beş saniye içerisinde çıktınız hazır.
@@ -103,4 +108,5 @@ Basitliği ve pratikliği sebebi ile `ViceConverter` sınıfı örnek kod olarak
 https://github.com/ziyacivan/karakteryuzu/blob/75ffbe3c126e2166e54b528d9837419f789890e9/app/utils/converters.ts#L54
 
 #### 6. Pull-request
+
 Fork ettiğiniz projeden, ana repository olan "karakteryuzu" repo'suna pull-request oluşturduktan sonra, onaylanması için geliştiriciye ulaşabilirsiniz. Doküman içerisinde zor görünebilen entegrasyon, pratik ettikçe kolaylaşacaktır. Herhangi bir teknik sorun yaşanması durumunda, Discord sunucusu üzerinden ulaşabilirsiniz.
