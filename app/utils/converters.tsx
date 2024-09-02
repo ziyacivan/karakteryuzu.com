@@ -50,7 +50,7 @@ export class Converter {
   }
 }
 
-class ViceConverter {
+export class ViceConverter {
   public static async convertToBaseFormat(
     appearanceCode: string
   ): Promise<ICharacterAppearance> {
@@ -84,9 +84,39 @@ class ViceConverter {
       faceFeatures: code.faceFeatures,
     } as ICharacterAppearance;
   }
+
+  public static async convertSelf(
+    appearanceCode: ICharacterAppearance
+  ): Promise<IVice> {
+    return {
+      hair: [
+        appearanceCode.hair,
+        appearanceCode.hairColors[0],
+        appearanceCode.hairColors[1],
+      ],
+      beard: [0, 0],
+      blendData: [
+        appearanceCode.shapeFirstID,
+        appearanceCode.shapeSecondID,
+        appearanceCode.skinFirstID,
+        appearanceCode.skinSecondID,
+        appearanceCode.shapeMix,
+        appearanceCode.skinMix,
+      ],
+      eyeColor: appearanceCode.eyeColor,
+      faceFeatures: appearanceCode.faceFeatures,
+      headOverlays: appearanceCode.headOverlays.map((overlay) => overlay.index),
+      headOverlaysColor: appearanceCode.headOverlays.map(
+        (overlay) => overlay.firstColor
+      ),
+      headOverlaysOpacity: appearanceCode.headOverlays.map(
+        (overlay) => overlay.opacity
+      ),
+    } as IVice;
+  }
 }
 
-class RinaConverter {
+export class RinaConverter {
   public static async convertToBaseFormat(
     appearanceCode: string
   ): Promise<ICharacterAppearance> {
@@ -222,9 +252,13 @@ class RinaConverter {
       ],
     } as ICharacterAppearance;
   }
+
+  public static async convertSelf(
+    appearanceCode: ICharacterAppearance
+  ): Promise<IRina> {}
 }
 
-class MenyooConverter {
+export class MenyooConverter {
   public static async convertToBaseFormat(
     appearanceCode: string
   ): Promise<ICharacterAppearance> {
@@ -371,4 +405,6 @@ class MenyooConverter {
     };
     return appearance;
   }
+
+  public static async convertSelf(appearanceCode: ICharacterAppearance) {}
 }

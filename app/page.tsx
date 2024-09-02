@@ -15,7 +15,12 @@ import {
 } from "@nextui-org/react";
 import { Server } from "./utils/enums";
 import { serverList } from "./utils/servers";
-import { Converter } from "./utils/converters";
+import {
+  Converter,
+  MenyooConverter,
+  RinaConverter,
+  ViceConverter,
+} from "./utils/converters";
 import { useState } from "react";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -62,6 +67,26 @@ export default function Home() {
       detectedServer,
       appearanceCode
     );
+
+    let convertedCode;
+    switch (selectedServer) {
+      case Server.VICE:
+        convertedCode = await ViceConverter.convertSelf(baseFormat);
+        setOutputCode(JSON.stringify(convertedCode, null, 2));
+        break;
+      case Server.RINA:
+        convertedCode = await RinaConverter.convertSelf(baseFormat);
+        setOutputCode(JSON.stringify(convertedCode, null, 2));
+        break;
+      case Server.MENYOO:
+        convertedCode = await MenyooConverter.convertSelf(baseFormat);
+        // @ts-ignore
+        setOutputCode(convertedCode);
+        break;
+      default:
+        break;
+    }
+
     setOutputCode(JSON.stringify(baseFormat, null, 2));
     onOpen();
 
