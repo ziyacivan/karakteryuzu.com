@@ -24,10 +24,26 @@ export default function Home() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [appearanceCode, setAppearanceCode] = useState<string>("");
   const [outputCode, setOutputCode] = useState<string>("");
+  const [selectedServer, setSelectedServer] = useState(Server.UNKNOWN);
 
   const onClick = async () => {
     if (!appearanceCode) {
       toast.error("🚨 Karakter yüz kodu boş bırakılamaz!", {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+        style: { fontSize: 14 },
+      });
+    }
+
+    if (selectedServer === Server.UNKNOWN) {
+      toast.error("🚨 Hedef sunucu seçilmedi!", {
         position: "bottom-left",
         autoClose: 5000,
         hideProgressBar: false,
@@ -108,6 +124,9 @@ export default function Home() {
               className="mt-4"
               label="Hedef sunucuyu seçin"
               disabledKeys={[Server.VINEWOOD.toString()]}
+              onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
+                setSelectedServer(Number(event.target.value) as Server)
+              }
             >
               {serverList.map((server) => (
                 <SelectItem key={server.key} value={server.key}>
