@@ -2,6 +2,8 @@
 
 **karakteryuzu.com**, herhangi bir kâr amacı gütmeden, piyasada aktif bulunan bazı sunucular tarafından desteklenen, sunucudan sunucuya karakter yüzlerinin çevrilebilmesini sağlayan, her formattan veri kabul eden ve her formata çeviren, tamamen ücretsiz ve bağımsız bir araçtır. Herhangi bir yükleme gerektirmez, kopyala ve yapıştır hızında gerekli çevirme işlerini gerçekleştirir.
 
+Not: Bu bir hobi projedir, tüm sunucu geliştiricilerinin katkısına açıktır. Kod kalitesinden rahatsız olursanız veya bir hata tespit ederseniz, yeni bir özellik getirmek isterseniz, pull-request oluşturmanız yeterlidir.
+
 Credits:
 
 - [Play:V Freeroam (Menyoo Import/Export)](https://github.com/MyHwu9508/PlayVFreeroam)
