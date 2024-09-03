@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import {
@@ -16,6 +18,7 @@ import { Server } from "./utils/enums";
 import { disabledServerList, serverList } from "./utils/servers";
 import {
   Converter,
+  LSCBaseConverter,
   MenyooConverter,
   RinaConverter,
   ViceConverter,
@@ -98,6 +101,9 @@ export default function Home() {
             return;
           }
           break;
+        case Server.LSC_BASE:
+          convertedCode = await LSCBaseConverter.convertSelf(baseFormat);
+          setOutputCode(JSON.stringify(convertedCode, null, 2));
         default:
           break;
       }

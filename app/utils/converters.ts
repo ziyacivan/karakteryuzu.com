@@ -1,6 +1,6 @@
 import { HeadOverlay, Server } from "./enums";
 import { buildMenyooXML } from "./exporters";
-import { ICharacterAppearance, IRina, IVice } from "./interfaces";
+import { ICharacterAppearance, ILSCBase, IRina, IVice } from "./interfaces";
 import { parseCharacterXML } from "./parsers";
 
 export class Converter {
@@ -28,6 +28,10 @@ export class Converter {
       ) {
         return Server.RINA;
       }
+
+      if ("structure" in appearanceCode) {
+        return Server.LSC_BASE;
+      }
     }
 
     return Server.VINEWOOD;
@@ -44,7 +48,8 @@ export class Converter {
         return await RinaConverter.convertToBaseFormat(appearanceCode);
       case Server.MENYOO:
         return await MenyooConverter.convertToBaseFormat(appearanceCode);
-      // TODO: Add conversion for Vinewood:V in the future
+      case Server.LSC_BASE:
+        return await LSCBaseConverter.convertToBaseFormat(appearanceCode);
       default:
         throw new Error("Sunucu formatı hatalı!");
     }
@@ -489,5 +494,125 @@ export class MenyooConverter {
     } catch (error) {
       throw error;
     }
+  }
+}
+
+export class LSCBaseConverter {
+  public static async convertToBaseFormat(appearanceCode: string): Promise<ICharacterAppearance> {
+    const code: ILSCBase = JSON.parse(appearanceCode);
+
+    const overlays = [
+      ...code.opacityOverlays,
+      ...code.colorOverlays,
+    ];
+
+    const headOverlays = overlays.map((overlay) => {
+      return {
+        overlayID: overlay.id,
+        index: overlay.value,
+        opacity: overlay.opacity,
+        // @ts-ignore
+        firstColor: overlay?.color1 || 0,
+        // @ts-ignore
+        secondColor: overlay?.color2 || 0,
+      };
+    });
+
+    headOverlays.push({
+      overlayID: HeadOverlay.FACIAL_HAIR,
+      index: code.facialHair,
+      opacity: code.facialHairOpacity,
+      firstColor: code.facialHairColor1,
+      secondColor: 0,
+    }, {
+      overlayID: HeadOverlay.EYEBROWS,
+      index: code.eyebrows,
+      opacity: code.eyebrowsOpacity,
+      firstColor: code.eyebrowsColor1,
+      secondColor: 0,
+    });
+
+    const appearance: ICharacterAppearance = {
+      shapeFirstID: code.faceFather,
+      shapeSecondID: code.faceMother,
+      shapeThirdID: 0,
+      skinFirstID: code.skinFather,
+      skinSecondID: code.skinMother,
+      skinThirdID: 0,
+      shapeMix: code.faceMix,
+      skinMix: code.skinMix,
+      thirdMix: 0,
+      isParent: false,
+      headOverlays: headOverlays,
+      faceFeatures: code.structure,
+      eyeColor: code.eyes,
+      hair: code.hair,
+      hairColors: [code.hairColor1, code.hairColor2],
+    };
+
+    return appearance;
+  }
+
+  public static async convertSelf(appearanceCode: ICharacterAppearance): Promise<ILSCBase> {
+    let colorOverlays = appearanceCode.headOverlays.map((overlay) => {
+      if (overlay.overlayID == HeadOverlay.MAKEUP || overlay.overlayID == HeadOverlay.LIPSTICK || overlay.overlayID == HeadOverlay.BLUSH) {
+        return {
+          color1: overlay.firstColor,
+          opacity: overlay.opacity,
+          color2: overlay.secondColor,
+          id: overlay.overlayID,
+          value: overlay.index,
+        }
+      }
+    });
+    colorOverlays = colorOverlays.filter((overlay) => overlay != undefined);
+
+    let opacityOverlays = appearanceCode.headOverlays.map((overlay) => {
+      if (
+        overlay.overlayID !== HeadOverlay.MAKEUP &&
+        overlay.overlayID !== HeadOverlay.BLUSH &&
+        overlay.overlayID !== HeadOverlay.LIPSTICK &&
+        overlay.overlayID !== HeadOverlay.EYEBROWS &&
+        overlay.overlayID !== HeadOverlay.FACIAL_HAIR
+      ) {
+        return {
+          id: overlay.overlayID,
+          opacity: overlay.opacity,
+          value: overlay.index,
+        };
+      }
+    });
+    opacityOverlays = opacityOverlays.filter((overlay) => overlay !== undefined);
+
+    const appearance: ILSCBase = {
+      // @ts-ignore
+      colorOverlays: colorOverlays,
+      eyebrows: appearanceCode.headOverlays.find((overlay) => overlay.overlayID === HeadOverlay.EYEBROWS)?.index || 0,
+      eyes: appearanceCode.eyeColor,
+      eyebrowsColor1: appearanceCode.headOverlays.find((overlay) => overlay.overlayID === HeadOverlay.EYEBROWS)?.firstColor || 0,
+      eyebrowsOpacity: appearanceCode.headOverlays.find((overlay) => overlay.overlayID === HeadOverlay.EYEBROWS)?.opacity || 0,
+      faceMix: appearanceCode.shapeMix,
+      facialHairOpacity: appearanceCode.headOverlays.find((overlay) => overlay.overlayID === HeadOverlay.FACIAL_HAIR)?.opacity || 0,
+      faceFather: appearanceCode.shapeFirstID,
+      faceMother: appearanceCode.shapeSecondID,
+      facialHair: appearanceCode.headOverlays.find((overlay) => overlay.overlayID === HeadOverlay.FACIAL_HAIR)?.index || 0,
+      facialHairColor1: appearanceCode.headOverlays.find((overlay) => overlay.overlayID === HeadOverlay.FACIAL_HAIR)?.firstColor || 0,
+      hair: appearanceCode.hair,
+      hairColor1: appearanceCode.hairColors[0],
+      hairColor2: appearanceCode.hairColors[1],
+      hairOverlay: {
+        collection: "",
+        overlay: "",
+      },
+      // @ts-ignore
+      opacityOverlays: opacityOverlays,
+      sex: 0,
+      skinFather: appearanceCode.skinFirstID,
+      skinMix: appearanceCode.skinMix,
+      skinMother: appearanceCode.skinSecondID,
+      structure: appearanceCode.faceFeatures,
+    };
+
+    return appearance;
   }
 }
