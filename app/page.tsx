@@ -34,8 +34,8 @@ export default function Home() {
   const [selectedServer, setSelectedServer] = useState(Server.UNKNOWN);
 
   const onClick = async () => {
-    if (!appearanceCode) {
-      toast.error("🚨 Karakter yüz kodu boş bırakılamaz!", {
+    const showErrorToast = (message: string) => {
+      toast.error(message, {
         position: "bottom-left",
         autoClose: 5000,
         hideProgressBar: false,
@@ -47,21 +47,16 @@ export default function Home() {
         transition: Bounce,
         style: { fontSize: 14 },
       });
+    };
+
+    if (!appearanceCode) {
+      showErrorToast("🚨 Karakter yüz kodu boş bırakılamaz!");
+      return;
     }
 
     if (selectedServer === Server.UNKNOWN) {
-      toast.error("🚨 Hedef sunucu seçilmedi!", {
-        position: "bottom-left",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Bounce,
-        style: { fontSize: 14 },
-      });
+      showErrorToast("🚨 Hedef sunucu seçilmedi!");
+      return;
     }
 
     const detectedServer = await Converter.detectServer(appearanceCode);
