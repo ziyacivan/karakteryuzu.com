@@ -101,3 +101,40 @@ export interface IRina {
   chinShape: number;
   neckWidth: number;
 }
+
+export interface ILSCBase {
+  colorOverlays: {
+    color1: number;
+    opacity: number;
+    color2: number;
+    id: number;
+    value: number;
+  }[];
+  eyebrows: number;
+  eyes: number;
+  eyebrowsColor1: number;
+  eyebrowsOpacity: number;
+  faceMix: number;
+  facialHairOpacity: number;
+  faceFather: number;
+  faceMother: number;
+  facialHair: number;
+  facialHairColor1: number;
+  hair: number;
+  hairColor1: number;
+  hairColor2: number;
+  hairOverlay: {
+    collection: string;
+    overlay: string;
+  };
+  opacityOverlays: {
+    id: number;
+    opacity: number;
+    value: number;
+  }[];
+  sex: number;
+  skinFather: number;
+  skinMix: number;
+  skinMother: number;
+  structure: number[];
+}

@@ -11,7 +11,11 @@ export const serverList = [
   },
   {
     key: Server.MENYOO,
-    label: "Menyoo / GTA:World",
+    label: "Menyoo (GTA:World)",
+  },
+  {
+    key: Server.LSC_BASE,
+    label: "LSC Temel (Beyond:V, LSC..)"
   },
   {
     key: Server.VINEWOOD,

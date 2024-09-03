@@ -2,8 +2,9 @@ export enum Server {
   VICE = 1,
   RINA = 2,
   MENYOO = 3,
-  VINEWOOD = 4,
-  UNKNOWN = 5,
+  LSC_BASE = 4,
+  VINEWOOD = 5,
+  UNKNOWN = 6,
 }
 
 export const enum HeadOverlay {
