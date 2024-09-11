@@ -7,7 +7,7 @@ export const serverList = [
   },
   {
     key: Server.RINA,
-    label: "Rina:V",
+    label: "Rina:V, North:V",
   },
   {
     key: Server.MENYOO,

@@ -212,7 +212,7 @@ export default function Home() {
             <br />
             <span className="text-sm font-thin">
               <span className="font-bold">Kabul edilen formatlar:</span> Vice
-              Online, Rina:V, Menyoo / GTA:World, LSC Base (Beyond:V)
+              Online, Rina:V, North-V, Menyoo / GTA:World, LSC Base (Beyond:V)
             </span>
             <iframe
               className="mt-4 rounded-lg"
