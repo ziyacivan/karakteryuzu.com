@@ -15,7 +15,7 @@ export const serverList = [
   },
   {
     key: Server.LSC_BASE,
-    label: "LSC Temel (Beyond:V, LSC..)"
+    label: "LSC Temel Sunucular"
   },
   {
     key: Server.VINEWOOD,
